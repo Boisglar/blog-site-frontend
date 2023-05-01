@@ -5,6 +5,7 @@ import { Index } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { useParams } from 'react-router-dom';
 import axios from '../redux/axios';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 
 export const FullPost = () => {
   const [data, setData] = useState();
@@ -18,7 +19,6 @@ export const FullPost = () => {
       .then((res) => {
         setData(res.data);
         setIsLoading(false);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -34,14 +34,14 @@ export const FullPost = () => {
       <Post
         id={data._id}
         title={data.title}
-        imageUrl={data.imageUrl}
+        imageUrl={data.imageUrl ? `http://localhost:4444${data.imageUrl}` : ''}
         user={data.user}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}
         commentsCount={3}
         tags={data.tags}
         isFullPost>
-        <p>{data.text}</p>
+        <ReactMarkdown children={data.text} />
       </Post>
       <CommentsBlock
         items={[
