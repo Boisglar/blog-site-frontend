@@ -17,12 +17,11 @@ export const Login = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      email: 'test95@bk.ru',
-      password: '123',
+      email: '',
+      password: '',
     },
   });
 

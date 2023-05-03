@@ -8,16 +8,13 @@ import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import { selectIsAuth } from '../../redux/slices/auth';
 import { useNavigate, Navigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from '../../redux/axios';
-import { fetchPostById } from '../../redux/slices/posts';
 
 export const AddPost = () => {
-  const postById = useSelector((state) => state.posts);
   const isAuth = useSelector(selectIsAuth);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [isLoading, setLoading] = React.useState(false);
   const { id } = useParams();
