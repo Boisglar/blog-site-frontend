@@ -1,6 +1,35 @@
-# Getting Started with Create React App
+# News Blog 📰
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Наш сайт новостей представляет собой современное веб-приложение с функциональностью добавления, удаления и изменения новостей. Сайт разработан с использованием Material-UI, позволяющего создать стильный и отзывчивый интерфейс.
+
+Приложеение обладает стильным и отзывчивым интерфейсом, обеспечивает удобный опыт использования для пользователей. Он включает в себя функционал добавления, удаления и изменения новостей, комментарии к новостям, поиск новостей по тегам, авторизацию по JWT. Использовали React Hook Form для удобной работы с формами, Redux Toolkit для эффективного управления состоянием, React Router DOM для маршрутизации и Axios для взаимодействия с сервером.
+
+# 🛠 Стек проекта Front:
+
+- **ReactJS 18**
+- **JavaScript**
+- **Redux Toolkit** (хранение данных )
+- **React Router v6** (навигация)
+- **Axios + Fetch** (отправка запроса на бэкенд)
+- **React Hooks Form** (библиотек для обработки элементов ввода формы в экосистеме React)
+- Easymde (встраиваемый редактор JavaScript)
+- Prettier\*\* (форматирование кода)
+- CSS-Modules / SCSS (стилизация)
+- React Content Loader (скелетон)
+- Material ui
+
+# 🛠 Стек проекта Back:
+
+- NodeJs (позволяет пользоваться единым языком JavaScript для написания кода и на стороне клиента (Frontend), и на сервере (Backend))
+- Express Express-validator
+- Mongoose (это ORM для базы данных mongodb для node)
+- Cors ( для настройки запросов )
+- Мulter (для загрузки файлов)
+- Jsonwebtoken (для создания токенов)
+- Bcrypt ( Библиотека для зашищеного хранения пароля)
+- Nodemon
+- Думаю тут лучше всего будет добавить ссылку на back поэтому:
+  \*\*[Ссылка на Backend:](https://github.com/Boisglar/blog-site-backend)
 
 ## Available Scripts
 
@@ -14,57 +43,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![первью](https://disk.yandex.ru/client/disk/dev%20%20%D1%84%D0%BE%D1%82%D0%BA%D0%B8?idApp=client&dialog=slider&idDialog=%2Fdisk%2Fdev%20%20%D1%84%D0%BE%D1%82%D0%BA%D0%B8%2F%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202023-05-18%20%D0%B2%2017.09.55.png)
