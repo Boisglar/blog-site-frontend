@@ -10,7 +10,12 @@ import Skeleton from '@mui/material/Skeleton';
 
 import { SideBlock } from './SideBlock';
 
-export const TagsBlock = ({ items, isLoading = true }) => {
+interface ItagsBlock {
+  items: string[];
+  isLoading: boolean;
+}
+
+export const TagsBlock: React.FC<ItagsBlock> = ({ items, isLoading = true }) => {
   return (
     <SideBlock title="Тэги">
       <List>

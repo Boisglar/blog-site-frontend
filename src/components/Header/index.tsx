@@ -6,9 +6,10 @@ import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
 import { logout, selectIsAuth } from '../../redux/slices/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch } from '../../redux/store';
 
-export const Header = () => {
-  const dispatch = useDispatch();
+export const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
   const isAuth = useSelector(selectIsAuth);
 
   const onClickLogout = () => {

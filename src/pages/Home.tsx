@@ -5,25 +5,27 @@ import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { fetchPosts, fetchTags } from '../redux/slices/posts';
-import { fetchComments } from '../redux/slices/comments';
+import { Status, fetchComments } from '../redux/slices/comments';
 import { getRandomComments } from '../utils/getRandomComments';
+import { RootState, useAppDispatch } from '../redux/store';
 
-export const Home = () => {
-  const dispatch = useDispatch();
+export const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
 
   const [tabs, setTabs] = useState(0);
 
-  const { posts, tags } = useSelector((state) => state.posts);
+  const { posts, tags } = useSelector((state: RootState) => state.posts);
 
-  const comments = useSelector((state) => state.comments.comments);
-  const userData = useSelector((state) => state.auth.data);
+  const { comments } = useSelector((state: RootState) => state.comments);
+  const userData = useSelector((state: RootState) => state.auth.data);
 
-  const getLengthById = (id) => comments.items.filter((item) => item.postId === id).length;
+  const getLengthById = (id: string): number =>
+    comments.items.filter((item) => item.postId === id).length;
 
-  const isPostLoading = posts.status === 'loading';
-  const isTagsLoading = tags.status === 'loading';
+  const isPostLoading = posts.status === Status.LOADING;
+  const isTagsLoading = tags.status === Status.LOADING;
 
   const filterPostByPop = [...posts.items].sort((a, b) => b.viewsCount - a.viewsCount);
 
@@ -52,7 +54,7 @@ export const Home = () => {
                     title={obj.title}
                     imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''}
                     user={obj.user}
-                    createdAt={obj.createdAt}
+                    createdAt={obj.createdAt.slice(0, 10)}
                     viewsCount={obj.viewsCount}
                     commentsCount={getLengthById(obj._id)}
                     tags={obj.tags}
@@ -70,7 +72,7 @@ export const Home = () => {
                     title={obj.title}
                     imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''}
                     user={obj.user}
-                    createdAt={obj.createdAt}
+                    createdAt={obj.createdAt.slice(0, 10)}
                     viewsCount={obj.viewsCount}
                     commentsCount={getLengthById(obj._id)}
                     tags={obj.tags}
@@ -83,7 +85,7 @@ export const Home = () => {
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
             items={getRandomComments(comments.items)}
-            isLoading={comments.status === 'loading' ? true : false}
+            isLoading={comments.status === Status.LOADING ? true : false}
           />
         </Grid>
       </Grid>

@@ -6,14 +6,16 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 
 import styles from './Login.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchRegister, selectIsAuth } from '../../redux/slices/auth';
+import { useSelector } from 'react-redux';
+import { RegisterAuth, fetchRegister, selectIsAuth } from '../../redux/slices/auth';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/store';
+import { Payload } from '../Login';
 
-export const Registration = () => {
+export const Registration: React.FC = () => {
   const isAuth = useSelector(selectIsAuth);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -21,20 +23,22 @@ export const Registration = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      fullName: 'вася пупкин ',
-      email: 'vasy@bk.ru',
-      password: '1234',
+      fullName: '',
+      email: '',
+      password: '',
     },
   });
 
-  const onSubmit = async (value) => {
+  const onSubmit = async (value: RegisterAuth) => {
     const data = await dispatch(fetchRegister(value));
     if (!data.payload) {
       return alert('не удалось зарегистрироватся ');
     }
 
-    if ('token' in data.payload) {
-      window.localStorage.setItem('token', data.payload.token);
+    const { token }: Payload = data.payload;
+
+    if (token) {
+      window.localStorage.setItem('token', token);
     }
   };
   if (isAuth) {

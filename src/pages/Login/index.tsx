@@ -6,13 +6,18 @@ import Button from '@mui/material/Button';
 
 import styles from './Login.module.scss';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAuth, selectIsAuth } from '../../redux/slices/auth';
+import { useSelector } from 'react-redux';
+import { AuthUserData, fetchAuth, selectIsAuth } from '../../redux/slices/auth';
 import { Navigate } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/store';
 
-export const Login = () => {
+export interface Payload {
+  token?: string;
+}
+
+export const Login: React.FC = () => {
   const isAuth = useSelector(selectIsAuth);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -25,17 +30,19 @@ export const Login = () => {
     },
   });
 
-  const onSubmit = async (value) => {
+  const onSubmit = async (value: AuthUserData) => {
     const data = await dispatch(fetchAuth(value));
 
     if (!data.payload) {
       return alert('не удалось авторизоваться');
     }
+    const { token }: Payload = data.payload;
 
-    if ('token' in data.payload) {
-      window.localStorage.setItem('token', data.payload.token);
+    if (token) {
+      window.localStorage.setItem('token', token);
     }
   };
+
   if (isAuth) {
     return <Navigate to="/" />;
   }

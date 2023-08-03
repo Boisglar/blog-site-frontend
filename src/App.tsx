@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import { Header } from './components';
-import FindTegs from './components/FindTegs';
 import { Home, FullPost, Registration, AddPost, Login } from './pages';
 import { fetchAuthMe, selectIsAuth } from './redux/slices/auth';
+import { FindTegs } from './components/FindTegs';
 
 function App() {
   const dispatch = useDispatch();

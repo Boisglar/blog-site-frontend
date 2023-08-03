@@ -6,20 +6,35 @@ import { CommentsBlock } from '../components/CommentsBlock';
 import { Navigate, useParams } from 'react-router-dom';
 import axios from '../redux/axios';
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { fetchCommentsByPost } from '../redux/slices/comments';
 import { selectIsAuth } from '../redux/slices/auth';
+import { IUser } from '../types/index';
+import { RootState, useAppDispatch } from '../redux/store';
 
-export const FullPost = () => {
-  const dispatch = useDispatch();
+export interface IDataPost {
+  _id: string;
+  title: string;
+  imageUrl: string;
+  user: IUser;
+  tags: string[];
+  text: string;
+  createdAt: string;
+  viewsCount: string;
+}
 
-  const comments = useSelector((state) => state.comments.commentByPost);
+export const FullPost: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const comments = useSelector((state: RootState) => state.comments.commentByPost);
+
   const isAuth = useSelector(selectIsAuth);
 
-  const [data, setData] = useState();
+  const [data, setData] = useState<IDataPost>();
+
   const [isLoading, setIsLoading] = useState(true);
 
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     axios
@@ -32,7 +47,9 @@ export const FullPost = () => {
         console.log(err);
         alert('Ошибка при получении статьи');
       });
-    dispatch(fetchCommentsByPost(id));
+    if (id) {
+      dispatch(fetchCommentsByPost(id));
+    }
   }, []);
 
   if (isLoading) {
@@ -40,6 +57,10 @@ export const FullPost = () => {
   }
   if (!isAuth) {
     return <Navigate to="/" />;
+  }
+
+  if (!data) {
+    return <>.... Заагруска постов </>;
   }
   return (
     <>
@@ -49,14 +70,14 @@ export const FullPost = () => {
         imageUrl={data.imageUrl ? `http://localhost:4444${data.imageUrl}` : ''}
         user={data.user}
         createdAt={data.createdAt}
-        viewsCount={data.viewsCount}
+        viewsCount={Number(data.viewsCount)}
         commentsCount={comments.items.length}
         tags={data.tags}
         isFullPost>
         <ReactMarkdown children={data.text} />
       </Post>
       <CommentsBlock items={comments.items} isLoading={false}>
-        <Index id={id} />
+        <Index id={id ? id : ''} />
       </CommentsBlock>
     </>
   );

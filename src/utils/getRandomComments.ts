@@ -1,4 +1,4 @@
-export function getRandomComments(array) {
+export function getRandomComments<T>(array: T[]): T[] {
   const result = [];
   const length = array.length;
 

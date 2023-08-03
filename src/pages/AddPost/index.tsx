@@ -11,7 +11,15 @@ import { useNavigate, Navigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from '../../redux/axios';
 
-export const AddPost = () => {
+interface PostData {
+  id: number;
+  title: string;
+  text: string;
+  tags: never[];
+  imageUrl: string;
+}
+
+export const AddPost: React.FC = () => {
   const isAuth = useSelector(selectIsAuth);
 
   const navigate = useNavigate();
@@ -20,17 +28,21 @@ export const AddPost = () => {
   const { id } = useParams();
   const isEditing = Boolean(id);
 
-  const inputFileRef = useRef(null);
+  const inputFileRef = useRef<HTMLInputElement | null>(null);
   const [text, setText] = React.useState('');
   const [title, setTitle] = React.useState('');
-  const [tags, setTags] = React.useState('');
+  const [tags, setTags] = React.useState([]);
   const [imageUrl, setImageUrl] = React.useState('');
 
-  const handleChangeFile = async (event) => {
+  const handleChangeFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const formData = new FormData();
-      const file = event.target.files[0];
-      formData.append('image', file);
+
+      if (event.target.files) {
+        const file = event.target.files[0];
+        formData.append('image', file);
+      }
+
       const { data } = await axios.post('upload', formData);
       setImageUrl(data.url);
     } catch (error) {
@@ -39,11 +51,17 @@ export const AddPost = () => {
     }
   };
 
+  const handleButtonClick = () => {
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
+  };
+
   const onClickRemoveImage = () => {
     setImageUrl('');
   };
 
-  const onChange = React.useCallback((value) => {
+  const onChange = React.useCallback((value: string) => {
     setText(value);
   }, []);
 
@@ -71,23 +89,21 @@ export const AddPost = () => {
   useEffect(() => {
     if (id) {
       axios
-        .get(`/posts/${id}`)
+        .get<PostData>(`/posts/${id}`)
         .then(({ data }) => {
-          return setText(
-            data.text,
-            setTags(data.tags.join(',')),
-            setImageUrl(data.imageUrl),
-            setTitle(data.title),
-          );
+          setText(data.text);
+          setTags(data.tags);
+          setImageUrl(data.imageUrl);
+          setTitle(data.title);
         })
         .catch((error) => {
           console.warn(error);
-          alert('произошла ошибка при редактировании статьи');
+          alert('Произошла ошибка при редактировании статьи');
         });
     }
-  }, []);
+  }, [id]);
 
-  const options = React.useMemo(
+  const options: any = React.useMemo(
     () => ({
       spellChecker: false,
       maxHeight: '400px',
@@ -108,7 +124,7 @@ export const AddPost = () => {
 
   return (
     <Paper style={{ padding: 30 }}>
-      <Button variant="outlined" size="large" onClick={() => inputFileRef.current.click()}>
+      <Button variant="outlined" size="large" onClick={handleButtonClick}>
         Загрузить превью
       </Button>
       <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
@@ -126,7 +142,7 @@ export const AddPost = () => {
       <TextField
         classes={{ root: styles.title }}
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
         variant="standard"
         placeholder="Заголовок статьи..."
         fullWidth
@@ -134,7 +150,7 @@ export const AddPost = () => {
       <TextField
         classes={{ root: styles.tags }}
         value={tags}
-        onChange={(e) => setTags(e.target.value)}
+        onChange={(e: React.ChangeEvent<any>) => setTags(e.target.value)}
         variant="standard"
         placeholder="Тэги"
         fullWidth
